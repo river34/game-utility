@@ -50,13 +50,13 @@ namespace GameUtility
 			}
 			buffer.push_back('\0');
 
-			std::cout << "[UtilityLoader] File size: " << buffer.size() << "\n";
+			std::cout << "[UtilityLoader] File size: " << buffer.size() << std::endl;
 
 			// parse the buffer using the xml file parsing library into doc
 			xml_document<> doc;
 			doc.parse<0>(&buffer[0]);
 
-			std::cout << "[UtilityLoader] Name of my first node is: " << doc.first_node()->name() << "\n";
+			std::cout << "[UtilityLoader] Name of my first node is: " << doc.first_node()->name() << std::endl;
 
 			// find the root node
 			xml_node<>* root_node = doc.first_node("Utility");

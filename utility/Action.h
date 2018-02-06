@@ -62,6 +62,7 @@ namespace GameUtility
 			return finalScore;
 		}
 		inline std::string getName() { return m_sName; }
+		inline virtual void onUpdate(Blackboard* _blackboard) { }
 		inline static Action* create(const UtilityParams& _params) { return new Action(_params); }
 	};
 }

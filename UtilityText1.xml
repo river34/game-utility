@@ -17,7 +17,7 @@
   </Action>
   <Action id="Run">
     <Consideration name="Health">
-      <ResponseCurve type="Linear" slope="-1" exponent="1" xshift="0" yshift="0"/>
+      <ResponseCurve type="Linear" slope="-1" exponent="1" xshift="0" yshift="1"/>
       <Input id="Health"/>
     </Consideration>
   </Action>

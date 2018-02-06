@@ -31,7 +31,7 @@ namespace GameUtility
 		inline void addAction(Action* _action) { m_ActionList.push_back(_action); }
 		inline void registerInputParameter(Input* _input) { m_InputMap[_input->getName()] = _input; }
 		inline Input* getInputParameter(const std::string& _key) { auto it = m_InputMap.find(_key); if (it != m_InputMap.end()) return it->second; return nullptr; }
-		void tick(Blackboard* m_pBlackboard)
+		void tick(Blackboard* _blackboard)
 		{
 			std::cout << "[Utility] tick Utility" << std::endl;
 			assert(m_ActionList.size() > 0);
@@ -39,7 +39,7 @@ namespace GameUtility
 			auto max = m_ActionList.begin();
 			for (auto it = m_ActionList.begin(); it != m_ActionList.end(); it++)
 			{
-				float newScore = (*it)->getScore(m_pBlackboard);
+				float newScore = (*it)->getScore(_blackboard);
 				std::cout << "[Utility] calculate " << (*it)->getName() << " score = " << newScore << std::endl;
 				if (newScore > score)
 				{
@@ -48,6 +48,7 @@ namespace GameUtility
 				}
 			}
 			std::cout << "[Utility] choose " << (*max)->getName() << std::endl;
+			(*max)->onUpdate(_blackboard);
 		}
 	};
 }

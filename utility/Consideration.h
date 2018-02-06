@@ -45,7 +45,8 @@ namespace GameUtility
 		inline void setCurve(ResponseCurve* _curve) { m_pCurve = _curve; }
 		inline void setInput(Input* _input) { m_pInput = _input; }
 		inline std::string getName() { return m_sName; }
-		inline float getScore(Blackboard* _blackboard) { return m_pCurve->getScore(m_pInput->getValue(_blackboard)); }
+		inline float getScore(Blackboard* _blackboard) { float output = m_pCurve->getScore(m_pInput->getValue(_blackboard)); 
+		std::cout << "[Consideration] " << getName() << " output = " << output << std::endl; return output; }
 		inline static Consideration* create(const UtilityParams& _params) { return new Consideration(_params); }
 	};
 }
