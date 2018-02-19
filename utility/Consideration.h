@@ -15,6 +15,7 @@
 #include "UtilityParams.h"
 #include "ResponseCurve.h"
 #include "Input.h"
+#include "Target.h"
 
 class Blackboard;
 namespace GameUtility
@@ -44,9 +45,14 @@ namespace GameUtility
 		}
 		inline void setCurve(ResponseCurve* _curve) { m_pCurve = _curve; }
 		inline void setInput(Input* _input) { m_pInput = _input; }
-		inline std::string getName() { return m_sName; }
-		inline float getScore(Blackboard* _blackboard) { float output = m_pCurve->getScore(m_pInput->getValue(_blackboard)); 
-		std::cout << "[Consideration] " << getName() << " output = " << output << std::endl; return output; }
+		inline const std::string& getName() { return m_sName; }
+		inline const std::string& getInputName() { return m_pInput->getName(); }
+		inline const float getScore(const Blackboard* _blackboard, const Target* _target, const Action* _action) const
+		{
+			float output = m_pCurve->getScore(m_pInput->getValue(_blackboard, _target, _action));
+			//std::cout << "[Consideration] " << getName() << " output = " << output << std::endl; 
+			return output;
+		}
 		inline static Consideration* create(const UtilityParams& _params) { return new Consideration(_params); }
 	};
 }

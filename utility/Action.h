@@ -51,18 +51,20 @@ namespace GameUtility
 		{
 			m_Considerations.push_back(_consideration);
 		}
-		float getScore(Blackboard* _blackboard)
+		float const getScore(const Blackboard* _blackboard, const Target* _target) const
 		{
 			float finalScore = m_fWeight;
 			for (Consideration* c : m_Considerations)
 			{
-				finalScore *= c->getScore(_blackboard);
+				float score = c->getScore(_blackboard, _target, this);
+				finalScore *= score;
+				std::cout << "    [" << c->getInputName() << "] score = " << score << std::endl;
 			}
-			std::cout << "[Action] finalScore = " << finalScore << std::endl;
+			std::cout << "  [" << getName() << "] finalScore = " << finalScore << std::endl;
 			return finalScore;
 		}
-		inline std::string getName() { return m_sName; }
-		inline virtual void onUpdate(Blackboard* _blackboard) { }
+		inline const std::string& getName() const { return m_sName; }
+		inline virtual void onUpdate(Blackboard* _blackboard, Target* _target) { }
 		inline static Action* create(const UtilityParams& _params) { return new Action(_params); }
 	};
 }

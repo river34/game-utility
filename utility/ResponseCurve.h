@@ -86,11 +86,11 @@ namespace GameUtility
 				std::stringstream s(it->second);
 				s >> m_dYShift;
 			}
-			std::cout << "[ResponseCurve] create ResponseCurve " << m_eType << std::endl;
+			//std::cout << "[ResponseCurve] create ResponseCurve " << m_eType << std::endl;
 		}
 		inline ResponseCurve(const ResponseCurve& _other) : m_eType(_other.m_eType), m_dSlope(_other.m_dSlope), m_dExponent(_other.m_dExponent), m_dXShift(_other.m_dXShift), m_dYShift(_other.m_dYShift) { }
 
-		CurveType stringToType(const std::string& _type)
+		const CurveType stringToType(const std::string& _type) const
 		{
 			if (_type == "Linear")
 			{
@@ -122,9 +122,9 @@ namespace GameUtility
 			}
 			return CurveType::Linear;
 		}
-		float getScore(const float _input)
+		const float getScore(const float _input) const
 		{
-			std::cout << "[ResponseCurve] input " << _input << std::endl;
+			//std::cout << "[ResponseCurve] input " << _input << std::endl;
 			float output = 0.f;
 			switch (m_eType)
 			{
@@ -143,15 +143,15 @@ namespace GameUtility
 			case CurveType::Sin:
 				output = 0.5 * m_dSlope * sin(2.0 * M_PI * (_input - m_dXShift)) + 0.5 + m_dYShift; break;
 			}
-			std::cout << "[ResponseCurve] output = " << output << std::endl;
-			std::cout << "[ResponseCurve] sanitize = " << sanitize(output) << std::endl;
+			//std::cout << "[ResponseCurve] output = " << output << std::endl;
+			//std::cout << "[ResponseCurve] sanitize = " << sanitize(output) << std::endl;
 
 			return sanitize(output);
 		}
 		inline static ResponseCurve* create(const UtilityParams& _params) { return new ResponseCurve(_params); }
 
 	private:
-		double sanitize(double _y)
+		const double sanitize(double _y) const
 		{
 			if (_y < 0.0) return 0.0;
 			if (_y > 1.0) return 1.0;

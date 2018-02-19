@@ -12,10 +12,12 @@
 #include <string>
 #include <sstream>
 #include "UtilityParams.h"
+#include "Target.h"
 
 class Blackboard;
 namespace GameUtility
 {
+	class Action;
 	class Input
 	{
 	protected:
@@ -27,7 +29,7 @@ namespace GameUtility
 		typedef Input* (*createInstanceFn) (const UtilityParams&);
 
 	public:
-		inline Input() : m_sName("InputParameter"), m_fMinValue(0.f), m_fMaxValue(1.f) { }
+		inline Input() : m_sName("Input"), m_fMinValue(0.f), m_fMaxValue(1.f) { }
 		inline Input(const std::string& _name, const float _minValue, const float _maxValue) : m_sName(_name), m_fMinValue(_minValue), m_fMaxValue(_maxValue) { }
 		inline Input(const Input& _other) : m_sName(_other.m_sName), m_fMinValue(_other.m_fMinValue), m_fMaxValue(_other.m_fMaxValue) { }
 		Input(const UtilityParams& _params)
@@ -54,11 +56,11 @@ namespace GameUtility
 			}
 			std::cout << "[Input] created " << getName() << " min = " << getMin() << " max = " << getMax() << std::endl;
 		}
-		inline std::string getName() { return m_sName; }
-		inline float getMin() { return m_fMinValue; }
-		inline float getMax() { return m_fMaxValue; }
-		inline virtual float getValue(Blackboard* _blackboard) { return 0.f; }
-		float normalize(float _value)
+		inline const std::string& getName() const { return m_sName; }
+		inline const float getMin() const { return m_fMinValue; }
+		inline const float getMax() const { return m_fMaxValue; }
+		inline virtual const float getValue(const Blackboard* _blackboard, const Target* _target, const Action* _action) const { return 0.f; }
+		float normalize(float _value) const
 		{
 			assert(m_fMaxValue - m_fMinValue > 0);
 			if (_value < m_fMinValue) return m_fMinValue;
